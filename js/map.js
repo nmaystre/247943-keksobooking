@@ -64,7 +64,7 @@ for (var i = 0; i < 8; i++) {
   pinMap.appendChild(generateElement(randomArray[i]));
 }
 
-var createDialogContent = function() {
+var createDialogContent = function () {
 
   var dialogPanelContent = template.cloneNode(true);
   dialogPanelContent.querySelector('.lodge__title').innerHTML = randomArray[0].offer.title;
@@ -105,8 +105,3 @@ var createDialogContent = function() {
 var dialogPanelParent = document.querySelector('#offer-dialog');
 var newContent = createDialogContent();
 dialogPanelParent.replaceChild(newContent, dialogPanel);
-
-
-
-
-
