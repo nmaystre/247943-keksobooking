@@ -59,8 +59,7 @@ function generateElement(element) {
   pinCopy.appendChild(pinImg);
   pinCopy.style.left = (element.location.x - 20) + 'px';
   pinCopy.style.top = (element.location.y + 40) + 'px';
-  var img = pinCopy.querySelector('img');
-  img.src = element.author.avatar;
+  pinImg.src = element.author.avatar;
   return pinCopy;
 }
 
@@ -107,8 +106,7 @@ var createDialogContent = function (obj) {
   return dialogPanelContent;
 };
 
-createDialogContent(randomArray[0]);
 
 var dialogPanelParent = document.querySelector('#offer-dialog');
-var newContent = createDialogContent();
+var newContent = createDialogContent(randomArray[0]);
 dialogPanelParent.replaceChild(newContent, dialogPanel);
