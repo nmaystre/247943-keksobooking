@@ -6,11 +6,15 @@ var ITEM_CHECKIN = ['12:00', '13:00', '14:00'];
 var ITEM_CHECKOUT = ['12:00', '13:00', '14:00'];
 var ITEM_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
-var randomArray = [];
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
+var randomArray = [];
 var pinMap = document.querySelector('.tokyo__pin-map');
 var template = document.querySelector('#lodge-template').content;
-var dialogPanel = document.querySelector('.dialog__panel');
+var dialogPanelParent = document.querySelector('#offer-dialog');
+var cardCloseBtn = dialogPanelParent.querySelector('.dialog__close');
+
 
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -23,7 +27,7 @@ var getRandomFeatures = function () {
   return newItemFeatures;
 };
 
-var createRandomItem = function (i) {
+var generateItem = function (i) {
   var randomItem = {
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png'
@@ -49,9 +53,17 @@ var createRandomItem = function (i) {
   return randomItem;
 };
 
-function generateElement(element) {
+var deactivatePins = function () {
+  var pins = document.getElementsByClassName('pin');
+  for (var i = 0; i < pins.length; i++) {
+    pins[i].classList.remove('pin--active');
+  }
+};
+
+var createPin = function (element) {
   var pinCopy = document.createElement('div');
   pinCopy.classList.add('pin');
+  pinCopy.tabIndex = 0;
   var pinImg = document.createElement('img');
   pinImg.classList.add('rounded');
   pinImg.setAttribute('width', '40');
@@ -60,15 +72,31 @@ function generateElement(element) {
   pinCopy.style.left = (element.location.x - 20) + 'px';
   pinCopy.style.top = (element.location.y + 40) + 'px';
   pinImg.src = element.author.avatar;
+
+  var activatePin = function () {
+    deactivatePins();
+    pinCopy.classList.add('pin--active');
+  };
+  var showCard = function () {
+    dialogPanelParent.classList.remove('hidden');
+    var newContent = createCard(element);
+    var dialogPanel = document.querySelector('.dialog__panel');
+    dialogPanelParent.replaceChild(newContent, dialogPanel);
+  };
+  pinCopy.addEventListener('click', function () {
+    activatePin();
+    showCard();
+  });
+  pinCopy.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      activatePin();
+      showCard();
+    }
+  });
   return pinCopy;
-}
+};
 
-for (var i = 0; i < 8; i++) {
-  randomArray[i] = createRandomItem(i);
-  pinMap.appendChild(generateElement(randomArray[i]));
-}
-
-var createDialogContent = function (obj) {
+var createCard = function (obj) {
   var dialogPanelContent = template.cloneNode(true);
   dialogPanelContent.querySelector('.lodge__title').innerHTML = obj.offer.title;
   dialogPanelContent.querySelector('.lodge__price').innerHTML = obj.offer.price + '&#x20bd;/ночь';
@@ -101,12 +129,43 @@ var createDialogContent = function (obj) {
   var lodgeDescriptionContent = templateAvatar.cloneNode(true);
   lodgeDescriptionContent.textContent = obj.offer.description;
 
-  var dialogTitleContent = document.querySelector('.dialog__title');
+  var dialogTitle = document.querySelector('.dialog__title');
+  var dialogTitleContent = dialogTitle.children[0];
   dialogTitleContent.src = obj.author.avatar;
+
+  document.addEventListener('keydown', onCardEscPress);
   return dialogPanelContent;
 };
 
+var onCardEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeCard();
+  }
+};
 
-var dialogPanelParent = document.querySelector('#offer-dialog');
-var newContent = createDialogContent(randomArray[0]);
-dialogPanelParent.replaceChild(newContent, dialogPanel);
+var closeCard = function () {
+  dialogPanelParent.classList.add('hidden');
+  deactivatePins();
+  document.removeEventListener('keydown', onCardEscPress);
+};
+
+cardCloseBtn.addEventListener('click', function () {
+  closeCard();
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeCard();
+  }
+});
+
+cardCloseBtn.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeCard();
+  }
+});
+
+for (var i = 0; i < 8; i++) {
+  randomArray[i] = generateItem(i);
+  pinMap.appendChild(createPin(randomArray[i]));
+}
