@@ -13,7 +13,6 @@ var randomArray = [];
 var pinMap = document.querySelector('.tokyo__pin-map');
 var template = document.querySelector('#lodge-template').content;
 var dialogPanelParent = document.querySelector('#offer-dialog');
-var pinAll = document.getElementsByClassName('pin');
 var cardCloseBtn = dialogPanelParent.querySelector('.dialog__close');
 
 
@@ -55,8 +54,9 @@ var generateItem = function (i) {
 };
 
 var deactivatePins = function () {
-  for (i = 0; i < document.getElementsByClassName('pin').length; i++) {
-    document.getElementsByClassName('pin')[i].classList.remove('pin--active');
+  var pins = document.getElementsByClassName('pin');
+  for (var i = 0; i < pins.length; i++) {
+    pins[i].classList.remove('pin--active');
   }
 };
 
@@ -89,6 +89,7 @@ var createPin = function (element) {
   });
   pinCopy.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
+      activatePin();
       showCard();
     }
   });
