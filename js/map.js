@@ -49,20 +49,6 @@ var createRandomItem = function (i) {
   return randomItem;
 };
 
-function generateElement(element) {
-  var pinCopy = document.createElement('div');
-  pinCopy.classList.add('pin');
-  var pinImg = document.createElement('img');
-  pinImg.classList.add('rounded');
-  pinImg.setAttribute('width', '40');
-  pinImg.setAttribute('height', '44');
-  pinCopy.appendChild(pinImg);
-  pinCopy.style.left = (element.location.x - 20) + 'px';
-  pinCopy.style.top = (element.location.y + 40) + 'px';
-  pinImg.src = element.author.avatar;
-  return pinCopy;
-}
-
 for (var i = 0; i < 8; i++) {
   randomArray[i] = createRandomItem(i);
   pinMap.appendChild(generateElement(randomArray[i]));
@@ -106,7 +92,34 @@ var createDialogContent = function (obj) {
   return dialogPanelContent;
 };
 
-
 var dialogPanelParent = document.querySelector('#offer-dialog');
-var newContent = createDialogContent(randomArray[0]);
+var newContent = createDialogContent(randomArray[i]);
 dialogPanelParent.replaceChild(newContent, dialogPanel);
+
+function generateElement(element) {
+  var pinCopy = document.createElement('div');
+  pinCopy.classList.add('pin');
+  pinCopy.tabIndex = 0;
+  var pinImg = document.createElement('img');
+  pinImg.classList.add('rounded');
+  pinImg.setAttribute('width', '40');
+  pinImg.setAttribute('height', '44');
+  pinCopy.appendChild(pinImg);
+  pinCopy.style.left = (element.location.x - 20) + 'px';
+  pinCopy.style.top = (element.location.y + 40) + 'px';
+  pinImg.src = element.author.avatar;
+
+  var createDialogContent;
+  var dialogPanelParent = document.querySelector('#offer-dialog');
+  var newContent = createDialogContent(randomArray[element]);
+  pinCopy.addEventListener('click', function (element) {
+    var pinAll = document.getElementsByClassName('pin');
+
+    for (i = 0; i < pinAll.length; i++) {
+      pinAll[i].classList.remove('.pin--active');
+    }
+    pinCopy.classList.add('.pin--active');
+    dialogPanelParent.replaceChild(newContent, dialogPanel);
+  });
+  return pinCopy;
+}
