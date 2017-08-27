@@ -54,6 +54,12 @@ var generateItem = function (i) {
   return randomItem;
 };
 
+var deactivatePins = function () {
+  for (i = 0; i < document.getElementsByClassName('pin').length; i++) {
+    document.getElementsByClassName('pin')[i].classList.remove('pin--active');
+  }
+};
+
 var createPin = function (element) {
   var pinCopy = document.createElement('div');
   pinCopy.classList.add('pin');
@@ -68,10 +74,8 @@ var createPin = function (element) {
   pinImg.src = element.author.avatar;
 
   var activatePin = function () {
-    for (i = 0; i < pinAll.length; i++) {
-      pinAll[i].classList.remove('.pin--active');
-    }
-    pinCopy.classList.add('.pin--active');
+    deactivatePins();
+    pinCopy.classList.add('pin--active');
   };
   var showCard = function () {
     dialogPanelParent.classList.remove('hidden');
@@ -127,6 +131,8 @@ var createCard = function (obj) {
   var dialogTitle = document.querySelector('.dialog__title');
   var dialogTitleContent = dialogTitle.children[0];
   dialogTitleContent.src = obj.author.avatar;
+
+  document.addEventListener('keydown', onCardEscPress);
   return dialogPanelContent;
 };
 
@@ -138,9 +144,7 @@ var onCardEscPress = function (evt) {
 
 var closeCard = function () {
   dialogPanelParent.classList.add('hidden');
-  for (i = 0; i < pinAll.length; i++) {
-    pinAll[i].classList.remove('.pin--active');
-  }
+  deactivatePins();
   document.removeEventListener('keydown', onCardEscPress);
 };
 
