@@ -25,7 +25,6 @@ var advGuests = userAdv.querySelector('#capacity');
 var advCheckin = userAdv.querySelector('#timein');
 var advCheckout = userAdv.querySelector('#timeout');
 
-
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
@@ -204,33 +203,38 @@ advPrice.addEventListener('invalid', function () {
   }
 });
 
-advCheckin.addEventListener('input', function () {
+advCheckin.addEventListener('change', function () {
   var newAdvCheckin = advCheckin.value;
   advCheckout.value = newAdvCheckin;
 });
 
-advType.addEventListener('input', function () {
+advCheckout.addEventListener('change', function () {
+  var newAdvCheckout = advCheckout.value;
+  advCheckin.value = newAdvCheckout;
+});
+
+advType.addEventListener('change', function () {
   var newAdvType = advType.value;
   switch (newAdvType) {
     case 'flat':
-      advPrice.minLength = '1000';
-      advPrice.placeholder = '1000';
+      advPrice.min = '1000';
+      advPrice.value = '1000';
       break;
     case 'bungalo':
-      advPrice.minLength = '0';
-      advPrice.placeholder = '0';
+      advPrice.min = '0';
+      advPrice.value = '0';
       break;
     case 'house':
-      advPrice.minLength = '5000';
-      advPrice.placeholder = '5000';
+      advPrice.min = '5000';
+      advPrice.value = '5000';
       break;
     case 'palace':
-      advPrice.minLength = '10000';
-      advPrice.placeholder = '10000';
+      advPrice.min = '10000';
+      advPrice.value = '10000';
   }
 });
 
-advRooms.addEventListener('input', function () {
+advRooms.addEventListener('change', function () {
   var newAdvRooms = advRooms.value;
   switch (newAdvRooms) {
     case '1':
@@ -247,7 +251,7 @@ advRooms.addEventListener('input', function () {
   }
 });
 
-advGuests.addEventListener('input', function () {
+advGuests.addEventListener('change', function () {
   var newAdvGuests = advGuests.value;
   switch (newAdvGuests) {
     case '1':
@@ -263,11 +267,6 @@ advGuests.addEventListener('input', function () {
       advRooms.value = '100';
   }
 });
-
-var customValidation = function () {
-  invalidities: [],
-    
-}
 
 for (var i = 0; i < 8; i++) {
   randomArray[i] = generateItem(i);
