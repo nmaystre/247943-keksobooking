@@ -1,9 +1,7 @@
 'use strict';
 
-window.util = (function () {
-  var pinMap = document.querySelector('.tokyo__pin-map');
+window.pin = (function () {
   var dialogPanelParent = document.querySelector('#offer-dialog');
-
 
   var deactivatePins = function () {
     var pins = document.getElementsByClassName('pin');
@@ -47,11 +45,7 @@ window.util = (function () {
   };
 
   return {
-    generateRandomArray: function () {
-      for (var i = 0; i < 8; i++) {
-        pinMap.appendChild(createPin(window.data.generateRandomArray));
-      }
-      return pinMap;
-    }};
-
+    createPin: createPin,
+    deactivatePins: deactivatePins
+  };
 })();
