@@ -105,4 +105,8 @@ window.form = (function () {
     }
   });
 
+  return {
+    advAddress: advAddress
+  };
+
 })();
