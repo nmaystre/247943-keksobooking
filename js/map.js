@@ -1,6 +1,6 @@
 'use strict';
 
-window.map = (function () {
+(function () {
 
   var pinMap = document.querySelector('.tokyo__pin-map');
   var pinArray = window.data.generateRandomArray();
