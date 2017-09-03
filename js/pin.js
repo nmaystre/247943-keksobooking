@@ -27,7 +27,7 @@ window.pin = (function () {
     pinCopy.addEventListener('click', function () {
       activatePin();
       window.showcard.showCard(element, function () {
-        window.pin.deactivatePins();
+        deactivatePins();
       });
     });
     pinCopy.addEventListener('keydown', function (evt) {
