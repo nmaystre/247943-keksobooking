@@ -40,70 +40,19 @@ window.form = (function () {
     }
   });
 
-  advCheckin.addEventListener('change', function () {
-    var newAdvCheckin = advCheckin.value;
-    advCheckout.value = newAdvCheckin;
-  });
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+  window.synchronizeFields(advCheckin, advCheckout, window.data.ITEM_CHECKIN, window.data.ITEM_CHECKOUT, syncValues);
+  window.synchronizeFields(advCheckout, advCheckin, window.data.ITEM_CHECKOUT, window.data.ITEM_CHECKIN, syncValues);
 
-  advCheckout.addEventListener('change', function () {
-    var newAdvCheckout = advCheckout.value;
-    advCheckin.value = newAdvCheckout;
-  });
-
-  advType.addEventListener('change', function () {
-    var newAdvType = advType.value;
-    switch (newAdvType) {
-      case 'flat':
-        advPrice.min = '1000';
-        advPrice.value = '1000';
-        break;
-      case 'bungalo':
-        advPrice.min = '0';
-        advPrice.value = '0';
-        break;
-      case 'house':
-        advPrice.min = '5000';
-        advPrice.value = '5000';
-        break;
-      case 'palace':
-        advPrice.min = '10000';
-        advPrice.value = '10000';
-    }
-  });
-
-  advRooms.addEventListener('change', function () {
-    var newAdvRooms = advRooms.value;
-    switch (newAdvRooms) {
-      case '1':
-        advGuests.value = '1';
-        break;
-      case '2':
-        advGuests.value = '2';
-        break;
-      case '3':
-        advGuests.value = '3';
-        break;
-      case '100':
-        advGuests.value = '0';
-    }
-  });
-
-  advGuests.addEventListener('change', function () {
-    var newAdvGuests = advGuests.value;
-    switch (newAdvGuests) {
-      case '1':
-        advRooms.value = '1';
-        break;
-      case '2':
-        advRooms.value = '2';
-        break;
-      case '3':
-        advRooms.value = '3';
-        break;
-      case '0':
-        advRooms.value = '100';
-    }
-  });
+  var syncValueWithMin = function (element, value) {
+    element.min = value;
+  };
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValueWithMin);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValues);
+  window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
+  window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
 
   return {
     advAddress: advAddress

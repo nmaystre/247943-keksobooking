@@ -14,4 +14,4 @@ window.showcard = (function () {
   return {
     showCard: showCard
   };
-}());
+})();
