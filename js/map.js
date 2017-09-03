@@ -5,7 +5,6 @@
   var pinMap = document.querySelector('.tokyo__pin-map');
   var pinArray = window.data.generateRandomArray();
   var draggablePin = document.querySelector('.pin__main');
-  var newAdvAddress;
   for (var i = 0; i < pinArray.length; i++) {
     pinMap.appendChild(window.pin.createPin(pinArray[i]));
   }
@@ -27,10 +26,9 @@
       };
       var pinPositionLeft = (draggablePin.offsetLeft - shift.x);
       var pinPositionTop = (draggablePin.offsetTop - shift.y);
-      draggablePin.style.top = (pinPositionTop - shift.y) + 'px';
-      draggablePin.style.left = (pinPositionLeft - shift.x) + 'px';
-      newAdvAddress = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
-      window.form.advAddress.value = newAdvAddress;
+      draggablePin.style.top = pinPositionTop + 'px';
+      draggablePin.style.left = pinPositionLeft + 'px';
+      window.form.advAddress.value = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
