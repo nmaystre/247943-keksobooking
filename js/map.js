@@ -22,12 +22,14 @@
         y: startCoords.y - moveEvt.clientY
       };
       startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
+        x: moveEvt.clientX - 20,
+        y: moveEvt.clientY + 40
       };
-      draggablePin.style.top = (draggablePin.offsetTop - shift.y) + 'px';
-      draggablePin.style.left = (draggablePin.offsetLeft - shift.x) + 'px';
-      newAdvAddress = 'x: ' + draggablePin.style.left + ', y: ' + draggablePin.style.top;
+      var pinPositionLeft = (draggablePin.offsetLeft - shift.x);
+      var pinPositionTop = (draggablePin.offsetTop - shift.y);
+      draggablePin.style.top = (pinPositionTop - shift.y) + 'px';
+      draggablePin.style.left = (pinPositionLeft - shift.x) + 'px';
+      newAdvAddress = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
       window.form.advAddress.value = newAdvAddress;
     };
     var onMouseUp = function (upEvt) {
