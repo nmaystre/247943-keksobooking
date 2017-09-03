@@ -25,10 +25,10 @@
         x: moveEvt.clientX - 20,
         y: moveEvt.clientY + 40
       };
-      draggablePin.style.top = (draggablePin.offsetTop - shift.y) + 'px';
-      draggablePin.style.left = (draggablePin.offsetLeft - shift.x) + 'px';
       var pinPositionLeft = (draggablePin.offsetLeft - shift.x);
       var pinPositionTop = (draggablePin.offsetTop - shift.y);
+      draggablePin.style.top = (pinPositionTop - shift.y) + 'px';
+      draggablePin.style.left = (pinPositionLeft - shift.x) + 'px';
       newAdvAddress = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
       window.form.advAddress.value = newAdvAddress;
     };
