@@ -53,7 +53,6 @@ window.card = (function () {
 
   var closeCard = function () {
     dialogPanelParent.classList.add('hidden');
-    window.pin.deactivatePins();
     document.removeEventListener('keydown', onCardEscPress);
   };
 
@@ -71,7 +70,7 @@ window.card = (function () {
 
   });
   return {
-    createCard: createCard,
+    createCard: createCard
   };
 
 })();
