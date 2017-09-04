@@ -47,7 +47,7 @@ window.card = (function () {
 
 
   var onCardEscPress = function (evt) {
-    window.util.isEscEvent(evt, closeCard());
+    window.util.isEscEvent(evt, closeCard);
 
   };
 
@@ -61,12 +61,12 @@ window.card = (function () {
   });
 
   document.addEventListener('keydown', function (evt) {
-    window.util.isEscEvent(evt, closeCard());
+    window.util.isEscEvent(evt, closeCard);
 
   });
 
   cardCloseBtn.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, closeCard());
+    window.util.isEnterEvent(evt, closeCard);
 
   });
   return {

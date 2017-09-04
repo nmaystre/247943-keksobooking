@@ -31,8 +31,12 @@ window.pin = (function () {
       });
     });
     pinCopy.addEventListener('keydown', function (evt) {
-      window.util.isEnterEvent(evt, activatePin());
-      window.util.isEnterEvent(evt, window.showcard.showCard());
+      window.util.isEnterEvent(evt, function () {
+        activatePin();
+        window.showcard.showCard(element, function () {
+          deactivatePins();
+        });
+      });
     });
     return pinCopy;
   };
