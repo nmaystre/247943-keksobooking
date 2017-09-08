@@ -34,7 +34,6 @@ window.card = (function () {
     var dialogTitle = document.querySelector('.dialog__title');
     var dialogTitleContent = dialogTitle.children[0];
     dialogTitleContent.src = obj.author.avatar;
-    document.addEventListener('keydown', window.showcard.onCardEscPress);
     return dialogPanelContent;
   };
 

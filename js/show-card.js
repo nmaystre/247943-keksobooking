@@ -31,9 +31,9 @@ window.showcard = (function () {
   var onCardEscPress = function (evt) {
     window.util.isEscEvent(evt, closeCard);
   };
+  document.addEventListener('keydown', onCardEscPress);
 
   return {
     showCard: showCard,
-    onCardEscPress: onCardEscPress
   };
 })();
