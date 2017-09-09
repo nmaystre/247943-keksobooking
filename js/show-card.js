@@ -3,12 +3,9 @@
 window.showcard = (function () {
   var dialogPanelParent = document.querySelector('#offer-dialog');
   var cardCloseBtn = dialogPanelParent.querySelector('.dialog__close');
-  var closeCard = function (onClose) {
+  var closeCard = function () {
     dialogPanelParent.classList.add('hidden');
     document.removeEventListener('keydown', onCardEscPress);
-    if (typeof onClose === 'function') {
-      onClose();
-    }
   };
   cardCloseBtn.addEventListener('click', function () {
     closeCard();
