@@ -42,6 +42,5 @@ window.pin = (function () {
   };
   return {
     createPin: createPin,
-    deactivatePins: deactivatePins
   };
 })();
