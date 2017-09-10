@@ -8,6 +8,7 @@
   for (var i = 0; i < pinArray.length; i++) {
     pinMap.appendChild(window.pin.createPin(pinArray[i]));
   }
+  pinMap.children[1].classList.add('pin--active');
   window.showcard.showCard(pinArray[0]);
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
