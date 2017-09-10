@@ -8,6 +8,10 @@
   for (var i = 0; i < pinArray.length; i++) {
     pinMap.appendChild(window.pin.createPin(pinArray[i]));
   }
+  pinMap.children[1].classList.add('pin--active');
+  window.showcard.showCard(pinArray[0], function () {
+    window.pin.deactivatePins();
+  });
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
@@ -21,8 +25,8 @@
         y: startCoords.y - moveEvt.clientY
       };
       startCoords = {
-        x: moveEvt.clientX - 20,
-        y: moveEvt.clientY + 40
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
       };
       var pinPositionLeft = (draggablePin.offsetLeft - shift.x);
       var pinPositionTop = (draggablePin.offsetTop - shift.y);

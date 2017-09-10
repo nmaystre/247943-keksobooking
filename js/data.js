@@ -51,5 +51,7 @@ window.data = (function () {
         randomArray.push(generateItem(i));
       }
       return randomArray;
-    }};
+    },
+    ITEM_CHECKIN: ITEM_CHECKIN,
+    ITEM_CHECKOUT: ITEM_CHECKOUT};
 })();

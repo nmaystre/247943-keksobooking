@@ -1,7 +1,6 @@
 'use strict';
 
 window.pin = (function () {
-  var dialogPanelParent = document.querySelector('#offer-dialog');
 
   var deactivatePins = function () {
     var pins = document.getElementsByClassName('pin');
@@ -9,7 +8,6 @@ window.pin = (function () {
       pins[i].classList.remove('pin--active');
     }
   };
-
   var createPin = function (element) {
     var pinCopy = document.createElement('div');
     pinCopy.classList.add('pin');
@@ -22,28 +20,26 @@ window.pin = (function () {
     pinCopy.style.left = (element.location.x - 20) + 'px';
     pinCopy.style.top = (element.location.y + 40) + 'px';
     pinImg.src = element.author.avatar;
-
     var activatePin = function () {
       deactivatePins();
       pinCopy.classList.add('pin--active');
     };
-    var showCard = function () {
-      dialogPanelParent.classList.remove('hidden');
-      var newContent = window.card.createCard(element);
-      var dialogPanel = document.querySelector('.dialog__panel');
-      dialogPanelParent.replaceChild(newContent, dialogPanel);
-    };
     pinCopy.addEventListener('click', function () {
       activatePin();
-      showCard();
+      window.showcard.showCard(element, function () {
+        deactivatePins();
+      });
     });
     pinCopy.addEventListener('keydown', function (evt) {
-      window.util.isEnterEvent(evt, activatePin());
-      window.util.isEnterEvent(evt, showCard());
+      window.util.isEnterEvent(evt, function () {
+        activatePin();
+        window.showcard.showCard(element, function () {
+          deactivatePins();
+        });
+      });
     });
     return pinCopy;
   };
-
   return {
     createPin: createPin,
     deactivatePins: deactivatePins
