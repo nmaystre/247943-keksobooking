@@ -9,7 +9,9 @@
     pinMap.appendChild(window.pin.createPin(pinArray[i]));
   }
   pinMap.children[1].classList.add('pin--active');
-  window.showcard.showCard(pinArray[0]);
+  window.showcard.showCard(pinArray[0], function () {
+    window.pin.deactivatePins();
+  });
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
