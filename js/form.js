@@ -49,10 +49,16 @@ window.form = (function () {
   var syncValueWithMin = function (element, value) {
     element.min = value;
   };
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValueWithMin);
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValues);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValueWithMin);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValues);
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
   window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
+
+  userAdv.addEventListener('submit', function(evt) {
+    window.backend.save(data, onLoad, onError);
+    evt.preventDefault();
+  });
+
 
   return {
     advAddress: advAddress

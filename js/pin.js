@@ -18,7 +18,7 @@ window.pin = (function () {
     pinImg.setAttribute('height', '44');
     pinCopy.appendChild(pinImg);
     pinCopy.style.left = (element.location.x - 20) + 'px';
-    pinCopy.style.top = (element.location.y + 40) + 'px';
+    pinCopy.style.top = (element.location.y - 40) + 'px';
     pinImg.src = element.author.avatar;
     var activatePin = function () {
       deactivatePins();
