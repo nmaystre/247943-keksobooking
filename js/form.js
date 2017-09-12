@@ -54,8 +54,16 @@ window.form = (function () {
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
   window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
 
-  userAdv.addEventListener('submit', function(evt) {
-    window.backend.save(data, onLoad, onError);
+  var loadDataCb = function () {
+    window.util.alertMessage('данные успешно отправлены!');
+    userAdv.reset();
+  };
+  var errorDataCb = function () {
+    window.util.alertMessage('произошла ошибка!');
+  };
+
+  userAdv.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(userAdv), loadDataCb, errorDataCb);
     evt.preventDefault();
   });
 
