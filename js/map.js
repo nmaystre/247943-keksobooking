@@ -63,6 +63,6 @@
       document.addEventListener('mouseup', onMouseUp);
     });
 
-  }, loadDataCb, errorDataCb);
+  }, errorDataCb);
 
 })();
