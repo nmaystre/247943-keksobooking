@@ -18,6 +18,9 @@ window.util = (function () {
     node.style.padding = 20 + 'px';
     node.style.textAlign = 'center';
     node.innerText = text;
+    setTimeout(function () {
+      document.body.removeChild(node);
+    }, 1000);
   };
 
   return {
