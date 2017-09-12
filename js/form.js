@@ -54,12 +54,12 @@ window.form = (function () {
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
   window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
 
-  var loadDataCb = function () {
-    window.util.alertMessage('данные успешно отправлены!');
+  var loadDataCb = function (text) {
+    window.util.alertMessage(text);
     userAdv.reset();
   };
-  var errorDataCb = function () {
-    window.util.alertMessage('произошла ошибка!');
+  var errorDataCb = function (text) {
+    window.util.alertMessage(text);
   };
 
   userAdv.addEventListener('submit', function (evt) {
