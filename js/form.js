@@ -49,10 +49,24 @@ window.form = (function () {
   var syncValueWithMin = function (element, value) {
     element.min = value;
   };
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValueWithMin);
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '0', '5000', '10000'], syncValues);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValueWithMin);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValues);
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
   window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
+
+  var loadDataCb = function (text) {
+    window.util.alertMessage(text);
+    userAdv.reset();
+  };
+  var errorDataCb = function (text) {
+    window.util.alertMessage(text);
+  };
+
+  userAdv.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(userAdv), loadDataCb, errorDataCb);
+    evt.preventDefault();
+  });
+
 
   return {
     advAddress: advAddress

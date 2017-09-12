@@ -10,8 +10,10 @@ window.synchronizeFields = (function () {
           syncFunction(input2, values2[i]);
         }
       }
-    });
 
+    });
   };
+
   return synchronizeFields;
+
 })();
