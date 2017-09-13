@@ -45,8 +45,14 @@ window.pin = (function () {
     });
 
     return pinCopy;
-
   };
+
+  var filterElement = function (value1, value2) {
+    if (value1 !== 'any') {
+
+    }
+  };
+
   return {
     createPin: createPin,
     deactivatePins: deactivatePins
