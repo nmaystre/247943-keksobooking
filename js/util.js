@@ -23,8 +23,8 @@ window.util = (function () {
     }, 1000);
   };
 
+  var lastTimeout;
   var debounce = function (fun, interval) {
-    var lastTimeout;
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }

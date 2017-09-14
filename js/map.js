@@ -120,8 +120,10 @@
   }
 
   housingFiltersList.addEventListener('change', function () {
-    window.util.debounce(emptyMap, debounceInterval);
-    window.util.debounce(mapUpdate, debounceInterval);
+    window.util.debounce(function () {
+      emptyMap();
+      mapUpdate();
+    }, debounceInterval);
   });
 
   var emptyMap = function () {
