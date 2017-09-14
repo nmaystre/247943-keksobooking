@@ -23,6 +23,14 @@ window.util = (function () {
     }, 1000);
   };
 
+  var lastTimeout;
+  var debounce = function (fun, interval) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(fun, interval);
+  };
+
   return {
     isEscEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
@@ -34,6 +42,7 @@ window.util = (function () {
         action();
       }
     },
-    alertMessage: alertMessage
+    alertMessage: alertMessage,
+    debounce: debounce
   };
 })();
