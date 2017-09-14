@@ -45,8 +45,8 @@ window.pin = (function () {
     });
 
     return pinCopy;
-
   };
+
   return {
     createPin: createPin,
     deactivatePins: deactivatePins

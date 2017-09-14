@@ -2,11 +2,15 @@
 
 window.card = (function () {
   var template = document.querySelector('#lodge-template').content;
+
   var createCard = function (obj) {
+
     var dialogPanelContent = template.cloneNode(true);
     dialogPanelContent.querySelector('.lodge__title').innerHTML = obj.offer.title;
     dialogPanelContent.querySelector('.lodge__price').innerHTML = obj.offer.price + '&#x20bd;/ночь';
+
     var lodgeType;
+
     switch (obj.offer.type) {
       case 'flat':
         lodgeType = 'Квартира';
@@ -20,14 +24,17 @@ window.card = (function () {
       default:
         lodgeType = 'Хз что это';
     }
+
     dialogPanelContent.querySelector('.lodge__type').textContent = lodgeType;
     dialogPanelContent.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + obj.offer.guests + ' гостей в ' + obj.offer.rooms + ' комнатах';
     dialogPanelContent.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + obj.offer.checkin + ' выезд до ' + obj.offer.checkout;
+
     for (var i = 0; i < obj.offer.features.length; i++) {
       var featuresSpan = document.createElement('span');
       featuresSpan.classList.add('feature__image', 'feature__image--' + obj.offer.features[i]);
       dialogPanelContent.querySelector('.lodge__features').appendChild(featuresSpan);
     }
+
     var templateAvatar = document.querySelector('.lodge__description');
     var lodgeDescriptionContent = templateAvatar.cloneNode(true);
     lodgeDescriptionContent.textContent = obj.offer.description;
