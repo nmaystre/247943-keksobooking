@@ -4,6 +4,7 @@
   var housingFiltersList = document.querySelector('.tokyo__filters');
   var pinMap = document.querySelector('.tokyo__pin-map');
   var advList = [];
+  var debounceInterval = 500;
 
   var successHandler = function (response) {
     advList = response;
@@ -16,83 +17,16 @@
 
   window.backend.load(successHandler, errorDataCb);
 
-
-  // function formDataUpdate() {
-  //   var housingTypeValue = document.querySelector('#housing_type').value;
-  //   var housingPriceValue = document.querySelector('#housing_price').value;
-  //   var housingRoomValue = document.querySelector('#housing_room-number').value;
-  //   var housingGuestValue = document.querySelector('#housing_guests-number').value;
-  //   var housingFeaturesValues = [].map.call(document.querySelector('#housing_features').children, function (it) {
-  //     return [it.children[0].value, it.children[0].checked];
-  //   });
-  //
-  //   var filteredData = advList.filter(function (it) {
-  //     if (housingTypeValue === 'any') {
-  //       return true;
-  //     }
-  //     return it.offer.type === housingTypeValue;
-  //   }).filter(function (it) {
-  //     switch (housingPriceValue) {
-  //       case 'any':
-  //         return true;
-  //       case 'middle':
-  //         return (it.offer.price > 10000) && (it.offer.price <= 50000);
-  //       case 'low':
-  //         return (it.offer.price <= 10000);
-  //       case 'high':
-  //         return (it.offer.price > 50000);
-  //     }
-  //     return it.offer.price === housingPriceValue;
-  //   }).filter(function (it) {
-  //     if (housingRoomValue === 'any') {
-  //       return true;
-  //     }
-  //     return (it.offer.rooms === parseInt(housingRoomValue, 10));
-  //   }).filter(function (it) {
-  //     if (housingGuestValue === 'any') {
-  //       return true;
-  //     }
-  //     return it.offer.guests === parseInt(housingGuestValue, 10);
-  //   });
-  //
-  //     // .filter(function (it) {
-  //     //
-  //     //   if (housingFeaturesValues.filter(function (it) {
-  //     //       return (it[1] === true);
-  //     //     }).length === 0) {
-  //     //     return true;
-  //     //   }
-  //     //
-  //     //   var hasItem = function(x, array){
-  //     //     var found = false;
-  //     //     array.forEach(function(it){ if (it === x){ found = true; } });
-  //     //     return found;
-  //     //   }
-  //     //
-  //     //   var ok = true;
-  //     //   for (var i = 0; i < housingFeaturesValues.length; i++)
-  //     //       if (housingFeaturesValues[i][1] === true) {
-  //     //         var found = hasItem(housingFeaturesValues[i][0], it.offer.features);
-  //     //         ok = ok && found;
-  //     //       }
-  //     //
-  //     //
-  //     //   return ok;
-  //     // }
-  //     // );
-  //
-  //   return filteredData;
-  // }
-
   function mapUpdate() {
     var housingTypeValue = document.querySelector('#housing_type').value;
     var housingPriceValue = document.querySelector('#housing_price').value;
     var housingRoomValue = document.querySelector('#housing_room-number').value;
     var housingGuestValue = document.querySelector('#housing_guests-number').value;
-    var housingFeaturesValues = [].map.call(document.querySelector('#housing_features').children, function (it) {
-      return [it.children[0].value, it.children[0].checked];
+    var housingFeaturesValues = {};
+    [].forEach.call(document.querySelector('#housing_features').children, function (it) {
+      // return [it.children[0].value, it.children[0].checked];
+      housingFeaturesValues[it.children[0].value] = it.children[0].checked;
     });
-
 
     var filteredData = advList.filter(function (it) {
       if (housingTypeValue === 'any') {
@@ -121,8 +55,16 @@
         return true;
       }
       return it.offer.guests === parseInt(housingGuestValue, 10);
+    }).filter(function (it) {
+      return Object.keys(housingFeaturesValues).map(function (el) {
+        if (housingFeaturesValues[el] === false) {
+          return true;
+        }
+        return it.offer.features.includes(el);
+      }).reduce(function (acc, ok) {
+        return acc && ok;
+      }, true);
     });
-
 
     var pinArray = filteredData;
     var draggablePin = document.querySelector('.pin__main');
@@ -178,32 +120,9 @@
   }
 
   housingFiltersList.addEventListener('change', function () {
-    emptyMap();
-    mapUpdate();
+    window.util.debounce(emptyMap, debounceInterval);
+    window.util.debounce(mapUpdate, debounceInterval);
   });
-
-  // var filterArray = [
-  //   '#housing_type',
-  //   '#housing_price',
-  //   '#housing_room-number',
-  //   '#housing_guests-number'
-  // ];
-
-  // filterArray.map(function (it) {
-  //   return document.querySelector(it);
-  // }).forEach(function (it) {
-  //   it.onchange = function () {
-  //     emptyMap();
-  //     window.backend.load(mapUpdate, errorDataCb);
-  //   };
-  // });
-  //
-  // [].forEach.call(document.querySelector('#housing_features').children, function(it) {
-  //   it.children[0].onclick = function() {
-  //     emptyMap();
-  //     window.backend.load(mapUpdate, errorDataCb);
-  //   };
-  // });
 
   var emptyMap = function () {
     var pins = pinMap.querySelectorAll('.pin:not(.pin__main)');
