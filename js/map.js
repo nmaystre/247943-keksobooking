@@ -17,7 +17,7 @@
 
   window.backend.load(successHandler, errorDataCb);
 
-  function mapUpdate() {
+  function applyFilters() {
     var housingTypeValue = document.querySelector('#housing_type').value;
     var housingPriceValue = document.querySelector('#housing_price').value;
     var housingRoomValue = document.querySelector('#housing_room-number').value;
@@ -28,7 +28,7 @@
       housingFeaturesValues[it.children[0].value] = it.children[0].checked;
     });
 
-    var filteredData = advList.filter(function (it) {
+    return advList.filter(function (it) {
       if (housingTypeValue === 'any') {
         return true;
       }
@@ -65,9 +65,9 @@
         return acc && ok;
       }, true);
     });
+  }
 
-    var pinArray = filteredData;
-    var draggablePin = document.querySelector('.pin__main');
+  function addPinsToMap(pinArray) {
 
     for (var i = 0; i < pinArray.length; i++) {
       pinMap.appendChild(window.pin.createPin(pinArray[i]));
@@ -79,6 +79,14 @@
         window.pin.deactivatePins();
       });
     }
+  }
+
+  function mapUpdate() {
+
+    var pinArray = applyFilters();
+    var draggablePin = document.querySelector('.pin__main');
+
+    addPinsToMap(pinArray);
 
     draggablePin.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
