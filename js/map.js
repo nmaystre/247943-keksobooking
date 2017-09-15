@@ -8,7 +8,8 @@
 
   var successHandler = function (response) {
     advList = response;
-    mapUpdate();
+    var advListNew = advList.slice(0, 3);
+    mapUpdate(advListNew);
   };
 
   var errorDataCb = function (text) {
@@ -17,18 +18,17 @@
 
   window.backend.load(successHandler, errorDataCb);
 
-  function applyFilters() {
+  function applyFilters(array) {
     var housingTypeValue = document.querySelector('#housing_type').value;
     var housingPriceValue = document.querySelector('#housing_price').value;
     var housingRoomValue = document.querySelector('#housing_room-number').value;
     var housingGuestValue = document.querySelector('#housing_guests-number').value;
     var housingFeaturesValues = {};
     [].forEach.call(document.querySelector('#housing_features').children, function (it) {
-      // return [it.children[0].value, it.children[0].checked];
       housingFeaturesValues[it.children[0].value] = it.children[0].checked;
     });
 
-    return advList.filter(function (it) {
+    return array.filter(function (it) {
       if (housingTypeValue === 'any') {
         return true;
       }
@@ -81,12 +81,6 @@
     }
   }
 
-  function mapUpdate() {
-
-    var pinArray = applyFilters();
-    addPinsToMap(pinArray);
-  }
-
   var draggablePin = document.querySelector('.pin__main');
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -130,9 +124,14 @@
   housingFiltersList.addEventListener('change', function () {
     window.util.debounce(function () {
       emptyMap();
-      mapUpdate();
+      mapUpdate(advList);
     }, debounceInterval);
   });
+
+  function mapUpdate(array) {
+    var pinArray = applyFilters(array);
+    addPinsToMap(pinArray);
+  }
 
   var emptyMap = function () {
     var pins = pinMap.querySelectorAll('.pin:not(.pin__main)');
