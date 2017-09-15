@@ -51,7 +51,7 @@ window.form = (function () {
       it.disabled = false;
       if (valueArray.indexOf(value) === -1) {
         it.disabled = true;
-        it.checked = false;
+        it.selected = false;
       }
     });
   };
