@@ -44,14 +44,14 @@ window.form = (function () {
     element.value = value;
   };
 
-  var syncValuesWithDisabled = function (element, value) {
-    var valueArray = ['1', '2', '3', '100'];
+  var syncValuesWithDisabled = function (element, valueArray) {
     var optionsList = element.children;
     [].forEach.call(optionsList, function (it) {
-      value = it.value;
+      var value = it.value;
       it.disabled = false;
       if (valueArray.indexOf(value) === -1) {
         it.disabled = true;
+        it.checked = false;
       }
     });
   };
@@ -68,11 +68,6 @@ window.form = (function () {
 
   window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValues);
 
-  // window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', '2', '3', '0'], syncValues);
-  //
-  // window.synchronizeFields(advGuests, advRooms, ['1', '2', '3', '0'], ['1', '2', '3', '100'], syncValues);
-
-  // window.synchronizeFields(advGuests, advRooms, ['3', '2', '1', '0'], ['1', ['1', '2'], ['1', '2', '3'], '100'], syncValuesWithDisabled);
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', ['1', '2'], ['1', '2', '3'], '0'], syncValuesWithDisabled);
 
 
