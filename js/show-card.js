@@ -5,7 +5,7 @@ window.showcard = (function () {
   var dialogPanelParent = document.querySelector('#offer-dialog');
   var cardCloseBtn = dialogPanelParent.querySelector('.dialog__close');
 
-  var showCard = function (element, onClose) {
+  function showCard(element, onClose) {
     dialogPanelParent.classList.remove('hidden');
     var newContent = window.card.createCard(element);
     var dialogPanel = document.querySelector('.dialog__panel');
@@ -36,8 +36,10 @@ window.showcard = (function () {
         cb();
       }
     };
-  };
+  }
+
   return {
     showCard: showCard
   };
 })();
+

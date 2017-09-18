@@ -6,15 +6,15 @@
   var advList = [];
   var debounceInterval = 500;
 
-  var successHandler = function (response) {
+  function successHandler(response) {
     advList = response;
     var advListNew = advList.slice(0, 3);
     mapUpdate(advListNew);
-  };
+  }
 
-  var errorDataCb = function (text) {
+  function errorDataCb(text) {
     window.util.alertMessage(text);
-  };
+  }
 
   window.backend.load(successHandler, errorDataCb);
 
@@ -82,16 +82,37 @@
   }
 
   var draggablePin = document.querySelector('.pin__main');
+
+  function getPinCoords() {
+    var coordsRect = draggablePin.getBoundingClientRect();
+    return {
+      top: coordsRect.top + pageYOffset,
+      left: coordsRect.left + pageXOffset
+    };
+  }
+
+  var defoltPinCoordY = getPinCoords().top + 20;
+  var defoltPinCoordX = getPinCoords().left - 40;
+
+  (function setDefoltCoords() {
+    window.form.advAddress.value = 'x: ' + defoltPinCoordX + ', y: ' + defoltPinCoordY;
+  })();
+
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
-      x: evt.clientX + 20,
-      y: evt.clientY - 40
+      x: evt.clientX,
+      y: evt.clientY
     };
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+
+      var startCoordX = 250;
+      var endCoordX = 1100;
+      var startCoordY = 150;
+      var endCoordY = 600;
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -103,13 +124,15 @@
         y: moveEvt.clientY
       };
 
-      var pinPositionLeft = (draggablePin.offsetLeft - shift.x);
+      var pinPositionLeft = Math.max(Math.min(endCoordX, (draggablePin.offsetLeft - shift.x)), startCoordX);
+      var pinPositionTop = Math.max(Math.min(endCoordY, (draggablePin.offsetTop - shift.y)), startCoordY);
 
-      var pinPositionTop = (draggablePin.offsetTop - shift.y);
       draggablePin.style.top = pinPositionTop + 'px';
       draggablePin.style.left = pinPositionLeft + 'px';
+
       window.form.advAddress.value = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
     };
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
@@ -133,10 +156,10 @@
     addPinsToMap(pinArray);
   }
 
-  var emptyMap = function () {
+  function emptyMap() {
     var pins = pinMap.querySelectorAll('.pin:not(.pin__main)');
     for (var i = 0; i < pins.length; i++) {
       pins[i].parentNode.removeChild(pins[i]);
     }
-  };
+  }
 })();

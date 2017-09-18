@@ -3,11 +3,11 @@
 window.card = (function () {
   var template = document.querySelector('#lodge-template').content;
 
-  var createCard = function (obj) {
+  function createCard(obj) {
 
     var dialogPanelContent = template.cloneNode(true);
-    dialogPanelContent.querySelector('.lodge__title').innerHTML = obj.offer.title;
-    dialogPanelContent.querySelector('.lodge__price').innerHTML = obj.offer.price + '&#x20bd;/ночь';
+    dialogPanelContent.querySelector('.lodge__title').textContent = obj.offer.title;
+    dialogPanelContent.querySelector('.lodge__price').textContent = obj.offer.price + '\u20BD/ночь';
 
     var lodgeType;
 
@@ -42,7 +42,7 @@ window.card = (function () {
     var dialogTitleContent = dialogTitle.children[0];
     dialogTitleContent.src = obj.author.avatar;
     return dialogPanelContent;
-  };
+  }
 
   return {
     createCard: createCard

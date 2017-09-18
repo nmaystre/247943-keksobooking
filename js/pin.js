@@ -2,15 +2,15 @@
 
 window.pin = (function () {
 
-  var deactivatePins = function () {
+  function deactivatePins() {
 
     var pins = document.getElementsByClassName('pin');
     for (var i = 0; i < pins.length; i++) {
       pins[i].classList.remove('pin--active');
     }
-  };
+  }
 
-  var createPin = function (element) {
+  function createPin(element) {
     var pinCopy = document.createElement('div');
     pinCopy.classList.add('pin');
     pinCopy.tabIndex = 0;
@@ -23,10 +23,10 @@ window.pin = (function () {
     pinCopy.style.top = (element.location.y - 40) + 'px';
     pinImg.src = element.author.avatar;
 
-    var activatePin = function () {
+    function activatePin() {
       deactivatePins();
       pinCopy.classList.add('pin--active');
-    };
+    }
 
     pinCopy.addEventListener('click', function () {
       activatePin();
@@ -45,7 +45,7 @@ window.pin = (function () {
     });
 
     return pinCopy;
-  };
+  }
 
   return {
     createPin: createPin,

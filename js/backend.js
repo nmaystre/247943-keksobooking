@@ -4,7 +4,7 @@ window.backend = (function () {
   var getURL = 'https://1510.dump.academy/keksobooking/data';
   var postURL = ' https://1510.dump.academy/keksobooking';
 
-  var load = function (onLoad, onError) {
+  function load(onLoad, onError) {
 
     var xhr = new XMLHttpRequest();
 
@@ -31,9 +31,9 @@ window.backend = (function () {
     xhr.open('GET', getURL);
     xhr.send();
 
-  };
+  }
 
-  var save = function (data, onLoad, onError) {
+  function save(data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -48,7 +48,7 @@ window.backend = (function () {
     xhr.open('POST', postURL);
     xhr.send(data);
 
-  };
+  }
 
   return {
     load: load,

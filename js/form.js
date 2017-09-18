@@ -1,6 +1,8 @@
 'use strict';
 
 window.form = (function () {
+  var ITEM_CHECKIN = ['12:00', '13:00', '14:00'];
+  var ITEM_CHECKOUT = ['12:00', '13:00', '14:00'];
   var userAdv = document.querySelector('.notice__form');
   var advTitle = userAdv.querySelector('#title');
   var advPrice = userAdv.querySelector('#price');
@@ -40,11 +42,11 @@ window.form = (function () {
     }
   });
 
-  var syncValues = function (element, value) {
+  function syncValues(element, value) {
     element.value = value;
-  };
+  }
 
-  var syncValuesWithDisabled = function (element, valueArray) {
+  function syncValuesWithDisabled(element, valueArray) {
     var optionsList = element.children;
     [].forEach.call(optionsList, function (it) {
       var value = it.value;
@@ -54,30 +56,32 @@ window.form = (function () {
         it.selected = false;
       }
     });
-  };
+  }
 
-  var syncValuesWithMin = function (element, value) {
-    element.max = value;
-  };
+  function syncValuesWithMin(element, value) {
+    element.min = value;
+  }
 
-  window.synchronizeFields(advCheckin, advCheckout, window.data.ITEM_CHECKIN, window.data.ITEM_CHECKOUT, syncValues);
+  window.synchronizeFields(advCheckin, advCheckout, ITEM_CHECKIN, ITEM_CHECKOUT, syncValues);
 
-  window.synchronizeFields(advCheckout, advCheckin, window.data.ITEM_CHECKOUT, window.data.ITEM_CHECKIN, syncValues);
+  window.synchronizeFields(advCheckout, advCheckin, ITEM_CHECKOUT, ITEM_CHECKIN, syncValues);
 
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValuesWithMin);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '10000', '0', '10000'], syncValuesWithMin);
 
-  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '5000', '0', '10000'], syncValues);
+  window.synchronizeFields(advType, advPrice, ['flat', 'house', 'bungalo', 'palace'], ['1000', '10000', '0', '10000'], syncValues);
+
+  window.synchronizeFields(advRooms, advGuests, ['100'], ['0'], syncValues);
 
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', ['1', '2'], ['1', '2', '3'], '0'], syncValuesWithDisabled);
 
 
-  var loadDataCb = function (text) {
+  function loadDataCb(text) {
     window.util.alertMessage(text);
     userAdv.reset();
-  };
-  var errorDataCb = function (text) {
+  }
+  function errorDataCb(text) {
     window.util.alertMessage(text);
-  };
+  }
 
   userAdv.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(userAdv), loadDataCb, errorDataCb);

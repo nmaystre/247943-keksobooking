@@ -5,7 +5,7 @@ window.util = (function () {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
 
-  var alertMessage = function (text) {
+  function alertMessage(text) {
     var node = document.createElement('div');
     document.body.appendChild(node);
     node.className = 'alert-message';
@@ -21,7 +21,7 @@ window.util = (function () {
     setTimeout(function () {
       document.body.removeChild(node);
     }, 1000);
-  };
+  }
 
   var lastTimeout;
   var debounce = function (fun, interval) {
