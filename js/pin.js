@@ -38,9 +38,7 @@ window.pin = (function () {
     pinCopy.addEventListener('keydown', function (evt) {
       window.util.isEnterEvent(evt, function () {
         activatePin();
-        window.showcard.showCard(element, function () {
-          deactivatePins();
-        });
+        window.showcard.showCard(element, deactivatePins);
       });
     });
 
