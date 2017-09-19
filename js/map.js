@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+window.map = (function () {
   var housingFiltersList = document.querySelector('.tokyo__filters');
   var pinMap = document.querySelector('.tokyo__pin-map');
   var advList = [];
@@ -94,9 +94,13 @@
   var defoltPinCoordY = getPinCoords().top + 20;
   var defoltPinCoordX = getPinCoords().left - 40;
 
-  (function setDefoltCoords() {
-    window.form.advAddress.value = 'x: ' + defoltPinCoordX + ', y: ' + defoltPinCoordY;
-  })();
+  function setCoords(pinCoordX, pinCoordY) {
+    window.form.advAddress.value = 'x: ' + pinCoordX + ', y: ' + pinCoordY;
+    draggablePin.style.left = pinCoordX + 'px';
+    draggablePin.style.top = pinCoordY + 'px';
+  }
+
+  setCoords(defoltPinCoordX, defoltPinCoordY);
 
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -127,10 +131,10 @@
       var pinPositionLeft = Math.max(Math.min(endCoordX, (draggablePin.offsetLeft - shift.x)), startCoordX);
       var pinPositionTop = Math.max(Math.min(endCoordY, (draggablePin.offsetTop - shift.y)), startCoordY);
 
-      draggablePin.style.top = pinPositionTop + 'px';
-      draggablePin.style.left = pinPositionLeft + 'px';
+      // draggablePin.style.top = pinPositionTop + 'px';
+      // draggablePin.style.left = pinPositionLeft + 'px';
 
-      window.form.advAddress.value = 'x: ' + pinPositionLeft + ', y: ' + pinPositionTop;
+      setCoords(pinPositionLeft, pinPositionTop);
     };
 
     var onMouseUp = function (upEvt) {
@@ -162,4 +166,10 @@
       pins[i].parentNode.removeChild(pins[i]);
     }
   }
+
+  return {
+    setCoords: setCoords,
+    defoltPinCoordX: defoltPinCoordX,
+    defoltPinCoordY: defoltPinCoordY
+  };
 })();

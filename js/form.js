@@ -78,6 +78,7 @@ window.form = (function () {
   function loadDataCb(text) {
     window.util.alertMessage(text);
     userAdv.reset();
+    window.map.setCoords(window.map.defoltPinCoordX, window.map.defoltPinCoordY);
   }
   function errorDataCb(text) {
     window.util.alertMessage(text);
