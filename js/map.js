@@ -102,6 +102,10 @@ window.map = (function () {
 
   setCoords(defaultPinCoordX, defaultPinCoordY);
 
+  function setDefaultCoords() {
+    setCoords(defaultPinCoordX, defaultPinCoordY);
+  }
+
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -166,7 +170,6 @@ window.map = (function () {
 
   return {
     setCoords: setCoords,
-    defaultPinCoordX: defaultPinCoordX,
-    defaultPinCoordY: defaultPinCoordY
+    setDefaultCoords: setDefaultCoords
   };
 })();

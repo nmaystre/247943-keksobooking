@@ -20,9 +20,6 @@ window.form = (function () {
 
   advAddress.addEventListener('invalid', function () {
     if (!advAddress.validity.valid) {
-      var customWarning;
-      customWarning = (advAddress.validity.valueMissing) ? ('Обязательное поле') : ('');
-      advAddress.setCustomValidity(customWarning);
       if (advAddress.validity.valueMissing) {
         advAddress.setCustomValidity('Обязательное поле');
       }
@@ -79,7 +76,7 @@ window.form = (function () {
   function loadDataCb(text) {
     window.util.alertMessage(text);
     userAdv.reset();
-    window.map.setCoords(window.map.defaultPinCoordX, window.map.defaultPinCoordY);
+    window.map.setDefaultCoords();
   }
   function errorDataCb(text) {
     window.util.alertMessage(text);
