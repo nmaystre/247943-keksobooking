@@ -169,7 +169,6 @@ window.map = (function () {
   }
 
   return {
-    setCoords: setCoords,
     setDefaultCoords: setDefaultCoords
   };
 })();
