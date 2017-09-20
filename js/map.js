@@ -91,8 +91,8 @@ window.map = (function () {
     };
   }
 
-  var defoltPinCoordY = getPinCoords().top + 20;
-  var defoltPinCoordX = getPinCoords().left - 40;
+  var defaultPinCoordY = getPinCoords().top + 20;
+  var defaultPinCoordX = getPinCoords().left - 40;
 
   function setCoords(pinCoordX, pinCoordY) {
     window.form.advAddress.value = 'x: ' + pinCoordX + ', y: ' + pinCoordY;
@@ -100,7 +100,7 @@ window.map = (function () {
     draggablePin.style.top = pinCoordY + 'px';
   }
 
-  setCoords(defoltPinCoordX, defoltPinCoordY);
+  setCoords(defaultPinCoordX, defaultPinCoordY);
 
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -130,9 +130,6 @@ window.map = (function () {
 
       var pinPositionLeft = Math.max(Math.min(endCoordX, (draggablePin.offsetLeft - shift.x)), startCoordX);
       var pinPositionTop = Math.max(Math.min(endCoordY, (draggablePin.offsetTop - shift.y)), startCoordY);
-
-      // draggablePin.style.top = pinPositionTop + 'px';
-      // draggablePin.style.left = pinPositionLeft + 'px';
 
       setCoords(pinPositionLeft, pinPositionTop);
     };
@@ -169,7 +166,7 @@ window.map = (function () {
 
   return {
     setCoords: setCoords,
-    defoltPinCoordX: defoltPinCoordX,
-    defoltPinCoordY: defoltPinCoordY
+    defaultPinCoordX: defaultPinCoordX,
+    defaultPinCoordY: defaultPinCoordY
   };
 })();

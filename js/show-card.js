@@ -11,23 +11,23 @@ window.showcard = (function () {
     var dialogPanel = document.querySelector('.dialog__panel');
     dialogPanelParent.replaceChild(newContent, dialogPanel);
 
-    var closeCardCb = function () {
+    function closeCardCb() {
       closeCard(onClose);
-    };
+    }
 
-    var onCardEscPress = function (evt) {
+    function onCardEscPress(evt) {
       window.util.isEscEvent(evt, closeCardCb);
-    };
+    }
 
-    var onCardEntPress = function (evt) {
+    function onCardEntPress(evt) {
       window.util.isEnterEvent(evt, closeCardCb);
-    };
+    }
 
     document.addEventListener('keydown', onCardEscPress);
     cardCloseBtn.addEventListener('click', closeCardCb);
     cardCloseBtn.addEventListener('keydown', onCardEntPress);
 
-    var closeCard = function (cb) {
+    function closeCard(cb) {
       dialogPanelParent.classList.add('hidden');
       document.removeEventListener('keydown', onCardEscPress);
       cardCloseBtn.removeEventListener('click', closeCardCb);
@@ -35,7 +35,7 @@ window.showcard = (function () {
       if (typeof cb === 'function') {
         cb();
       }
-    };
+    }
   }
 
   return {

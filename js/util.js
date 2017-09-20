@@ -24,12 +24,12 @@ window.util = (function () {
   }
 
   var lastTimeout;
-  var debounce = function (fun, interval) {
+  function debounce(fun, interval) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = window.setTimeout(fun, interval);
-  };
+  }
 
   return {
     isEscEvent: function (evt, action) {

@@ -15,15 +15,14 @@ window.form = (function () {
 
   advTitle.addEventListener('input', function (evt) {
     var target = evt.target;
-    if (target.value.length < 30) {
-      target.setCustomValidity('Заголовок должен состоять минимум из 30 символов');
-    } else {
-      target.setCustomValidity('');
-    }
+    target.setCustomValidity((target.value.length < 30) ? 'Заголовок должен состоять минимум из 30 символов' : '');
   });
 
   advAddress.addEventListener('invalid', function () {
     if (!advAddress.validity.valid) {
+      var customWarning;
+      customWarning = (advAddress.validity.valueMissing) ? ('Обязательное поле') : ('');
+      advAddress.setCustomValidity(customWarning);
       if (advAddress.validity.valueMissing) {
         advAddress.setCustomValidity('Обязательное поле');
       }
@@ -74,11 +73,13 @@ window.form = (function () {
 
   window.synchronizeFields(advRooms, advGuests, ['1', '2', '3', '100'], ['1', ['1', '2'], ['1', '2', '3'], '0'], syncValuesWithDisabled);
 
+  syncValuesWithMin(advPrice, '1000');
+  syncValuesWithDisabled(advGuests, ['1']);
 
   function loadDataCb(text) {
     window.util.alertMessage(text);
     userAdv.reset();
-    window.map.setCoords(window.map.defoltPinCoordX, window.map.defoltPinCoordY);
+    window.map.setCoords(window.map.defaultPinCoordX, window.map.defaultPinCoordY);
   }
   function errorDataCb(text) {
     window.util.alertMessage(text);
@@ -88,7 +89,6 @@ window.form = (function () {
     window.backend.save(new FormData(userAdv), loadDataCb, errorDataCb);
     evt.preventDefault();
   });
-
 
   return {
     advAddress: advAddress
