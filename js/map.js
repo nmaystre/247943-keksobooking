@@ -100,11 +100,11 @@ window.map = (function () {
     draggablePin.style.top = pinCoordY + 'px';
   }
 
-  setCoords(defaultPinCoordX, defaultPinCoordY);
-
   function setDefaultCoords() {
-    setCoords(defaultPinCoordX, defaultPinCoordY);
+    setCoords(defaultPinCoordX,defaultPinCoordY);
   }
+
+  setDefaultCoords();
 
   draggablePin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
