@@ -101,7 +101,7 @@ window.map = (function () {
   }
 
   function setDefaultCoords() {
-    setCoords(defaultPinCoordX,defaultPinCoordY);
+    setCoords(defaultPinCoordX, defaultPinCoordY);
   }
 
   setDefaultCoords();
